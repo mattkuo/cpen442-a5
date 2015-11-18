@@ -1,6 +1,7 @@
 \documentclass[conference]{IEEEtran}
 
 \usepackage{biblatex}
+\usepackage{listings}
 \usepackage{amsmath}
 \usepackage{url}
 \usepackage{graphicx}
@@ -104,8 +105,25 @@ victims keyboard activity into a logfile which can then be sent using the
 backdoor malware. However, this file hooks onto the kernel only with elevated
 privileges\cite{erwin_ventir_2014}.
 
+\section{Countermeasures \& Detection}
 
+Following the principles of least privilege only trusted programs that require
+elevated privileges should recieve it. Because the keylogger component of Ventir
+cannot function without elevated privileges, ensuring only trusted programs have
+access to root would shut down the effectiveness of the keylogger.  However,
+since the backdoor component can download more files and effectively, more
+malware, using a firewall to prevent incoming connections while only allowing
+trusted services outside access would also be a favorable prevention method. In
+addition, disabling AutoPlay should prevent the malware from being automatically
+executed.
 
+Ventir is easy to detect because it installs all its components into the
+\lstinline[basicstyle=\ttfamily]|/Library/.local| and
+\lstinline[basicstyle=\ttfamily]|~/Library/.local| directories. Indeed, an
+effective eradication scheme for Ventir would just require detection and removal
+of these key directories\cite{salmela_roll}.
+
+\section{Security Principles}
 
 \printbibliography
 
