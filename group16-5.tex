@@ -1,0 +1,113 @@
+\documentclass[conference]{IEEEtran}
+
+\usepackage{biblatex}
+\usepackage{amsmath}
+\usepackage{url}
+\usepackage{graphicx}
+
+
+% correct bad hyphenation here
+% \hyphenation{op-tical net-works semi-conduc-tor}
+\bibliography{refs.bib}
+
+\begin{document}
+
+\title{An Analysis of the Ventir OSX Keylogger}
+
+
+% author names and affiliations
+% use a multiple column layout for up to three different
+% affiliations
+\author{\IEEEauthorblockN{blue, v6q8}
+\IEEEauthorblockA{Department of Computer Science\\
+University of British Columbia\\
+}
+\and
+\IEEEauthorblockN{Matt Labbe, hydro}
+\IEEEauthorblockA{Electrical and\\Computer Engineering\\
+University of British Columbia\\
+}
+}
+
+
+% make the title area
+\maketitle
+
+% As a general rule, do not put math, special symbols or citations
+% in the abstract
+\begin{abstract}
+This article seeks to analyze the behavior and mechanisms of the Ventir malware.
+Prevention measures and security principles are also topics that are
+investigated in this study.
+\end{abstract}
+
+\section{Introduction}
+Throughout past decade, there has been an extensive surge in public concern
+concerning information privacy. The advancements of technology including the
+smartphone and the internet along with public disclosure of govermental and
+commercial breaches of private information has brought along a mass public
+interest in information security\cite{eset_trends}.
+
+Keyloggers, malicious software which are used to record victims' keystrokes, are
+an area of interest in regards to information security breaches. This study
+focuses on the Ventir backdoor keylogger which was discovered in October 2014.
+It is a keylogger which only runs on Mac OSX.
+
+\section{Propagation \& Target Selection}
+At the time of writing, security experts are unsure of how the malware is spread
+although it is suspected that pirated software from peer-to-peer networks could
+be to blame\cite{kuzin_ventir_2014}. As the malware only runs on Mac OSX which
+is catered towards a wealthier demographic, it is conceivable that malware
+creators looking for higher financial gains would target such an operating
+system\cite{scharr_ventir}.
+
+\section{Structure, Behavior and Mechanisms}
+Ventir is an ordinary 64-bit mach-o executable with multiple mach-o files in the
+data section of the executable. Similar to most Trojan-Droppers one of these
+mach-o files are set to autorun\cite{erwin_ventir_2014}.
+
+More generally, the keylogger consists of three main components: a trojan
+dropper, keylogger and backdoor. The way these components are utilized by the
+attacker depends on whether the attacker was able to gain root
+access\cite{kuzin_ventir_2014}.
+
+\subsection{Trojan-Dropper.OSX.Ventir.a}
+Immediately after the malware is executed, the dropper downloads a set of files
+to the victim's machine. The location of these files are dependent on whether
+the trojan obtains root access. These files will be dropped into the the
+victim's home directory instead of the root directory if root access is
+unavailable\cite{kuzin_ventir_2014}. The files that are dropped include the
+aforementioned keylogger and backdoor files along with global configuration
+files that allow the malware to communicate with the server that controls the
+malware. After these files are successfully dropped, the dropper loads the
+logging driver into the kernel, if root access is available, otherwise a
+Trojan-Spy is downloaded onto the target system. The dropper then removes itself
+from the system\cite{erwin_ventir_2014}.
+
+\subsection{Trojan-Spy.OSX.Ventir.a}
+The Trojan-Spy or EventMonitor is only downloaded if the dropper was unable to
+get root access. It installs its own version of system event handlers to
+intercept keystrokes using Carbon Event Manager functions which do not require
+root access\cite{kuzin_ventir_2014}.
+
+\subsection{Backdoor.OSX.Ventir.a}
+The backdoor file is executed in an infinite loop and continuously communicates
+with the command and control server (C\&C). The backdoor can understand and
+execute a variety of commands from the server such as reboot/restart the
+victim's computer, download/upload/execute files and uninstall itself.
+
+\subsection{not-a-virus:Monitor.OSX.LogKext.c}
+Of particular interest is the keylogger file. This file is based on
+\textit{logKext}, which is an open source OSX keylogger and can be found on
+online code repositories such as Github\cite{logkext}. This file records the
+victims keyboard activity into a logfile which can then be sent using the
+backdoor malware. However, this file hooks onto the kernel only with elevated
+privileges\cite{erwin_ventir_2014}.
+
+
+
+
+\printbibliography
+
+% that's all folks
+\end{document}
