@@ -1,6 +1,7 @@
 # Assignment 5 #
 
 **(10) (Malicious Logic)**: Pick one of the following malicious software (malware):
+
 1. Trojan-SMS.AndroidOS.Stealer.a
 2. Trojan-SMS.AndroidOS.FakeInst.fb
 3. Backdoor.AndroidOS.Fobus.a
@@ -27,7 +28,9 @@
 24. ShrewdCKSpy
 25. DeathRing
 26. ColdBrother
+
 ---
+
 1. Post a message (one message per group) in the course piazza indicating which malware your group has picked.
 
 2. If another group posted an earlier message indicating that they had picked the same malware as your group, go back to step 1 and pick "free" malware.
