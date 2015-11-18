@@ -7,8 +7,6 @@
 \usepackage{graphicx}
 
 
-% correct bad hyphenation here
-% \hyphenation{op-tical net-works semi-conduc-tor}
 \bibliography{refs.bib}
 
 \begin{document}
@@ -30,12 +28,8 @@ University of British Columbia\\
 }
 }
 
-
-% make the title area
 \maketitle
 
-% As a general rule, do not put math, special symbols or citations
-% in the abstract
 \begin{abstract}
 This article seeks to analyze the behavior and mechanisms of the Ventir malware.
 Prevention measures and security principles are also topics that are
@@ -51,8 +45,10 @@ interest in information security\cite{eset_trends}.
 
 Keyloggers, malicious software which are used to record victims' keystrokes, are
 an area of interest in regards to information security breaches. This study
-focuses on the Ventir backdoor keylogger which was discovered in October 2014.
-It is a keylogger which only runs on Mac OSX.
+focuses on the Ventir backdoor keylogger which was discovered in October 2014. A
+keylogger that only runs on Mac OSX, the Ventir malware is a suspect of recent
+leaks of login and passwords from some major e-mail
+providers\cite{kuzin_ventir_2014}.
 
 \section{Propagation \& Target Selection}
 At the time of writing, security experts are unsure of how the malware is spread
@@ -110,10 +106,7 @@ privileges\cite{erwin_ventir_2014}.
 Following the principles of least privilege only trusted programs that require
 elevated privileges should recieve it. Because the keylogger component of Ventir
 cannot function without elevated privileges, ensuring only trusted programs have
-access to root would shut down the effectiveness of the keylogger.  However,
-since the backdoor component can download more files and effectively, more
-malware, using a firewall to prevent incoming connections while only allowing
-trusted services outside access would also be a favorable prevention method. In
+access to root would shut down the effectiveness of the keylogger. In
 addition, disabling AutoPlay should prevent the malware from being automatically
 executed.
 
@@ -123,9 +116,34 @@ Ventir is easy to detect because it installs all its components into the
 effective eradication scheme for Ventir would just require detection and removal
 of these key directories\cite{salmela_roll}.
 
+However, since the backdoor component can download more files and effectively,
+more malware, using a firewall to prevent incoming connections while only
+allowing trusted services outside access would also be a favorable prevention
+method. To be completely safe though, experts recommend performing a total
+system reinstall
+
 \section{Security Principles}
+By itself, OSX does a decent job of adhering to security principals and thus
+preventing the Ventir malware from being as effective. The effectiveness of
+Ventir is severely crippled without root access. A security principle OSX could
+perhaps enforce even more to reduce the effectiveness of Ventir is the principle
+of complete mediation. When a suspicious or untrusted program is executed, OSX
+prompts the user for permission. It may make the system even more secure to
+prompt the user for permission each time the program is run.
+
+The implementation of the principle of least privilege could also be improved.
+When a program requests elevates privileges, the system could show a list of
+system modules that the program is trying to access (similar to the prompt shown
+when running apps on Android smartphones for the first time). In this way, the
+user could see and control the privileges given to programs.
+
+\section{Conclusion}
+The Ventir keylogger is an interesting malware to study as it shows that more
+malware vendors are choosing to target OSX. In addition, the growth of
+open-source software these past few years may be making easier for malware
+creators to develop malware. This would concievably lead to an influx of malware
+in the future.
 
 \printbibliography
 
-% that's all folks
 \end{document}
